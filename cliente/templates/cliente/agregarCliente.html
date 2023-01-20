@@ -1,4 +1,4 @@
-{% extends "inventario/comun/base.html" %}
+{% extends "comun/base.html" %}
 
 {% block content %}
 
@@ -96,15 +96,28 @@ function clienteCamposOcultos(esto)
 			<form role="form" method="POST" onsubmit="return validarTodo('cliente')">
 			{% csrf_token %}
 
-<!----------------   CAMPOS DE TIPO DE CEDULA Y CEDULA  ---------------------->
+
+<!----------------   CAMPOS DE IP  ---------------------->
+
+<label for="{{ form.ip.name }}">
+	{{form.ip.label}}
+</label>
+<div class="row form-group">
+	<div class="col-10">
+	  {{form.ip}}
+  </div>
+</div>
+
+<!------------------   FIN DE CAMPOS  ------------------------------------------>
+
+
+
+<!----------------   CAMPOS DE CEDULA  ---------------------->
 
 				<label for="{{ form.cedula.name }}">
 					{{form.cedula.label}}
 				</label>
 			<div class="row form-group">
-                <div class="col-2">
-                 {{form.tipoCedula}}
-             	</div>
                     <div class="col-10">
                       {{form.cedula}}
                   </div>
@@ -137,90 +150,137 @@ function clienteCamposOcultos(esto)
 <!-----------------   FIN DE CAMPOS ---------------------------------->
 
 
+<!-----------------   CAMPO DE TELEFONO DEL CLIENTE ------------------>
+
+<div class="form-group">
+	<label for="{{ form.telefono_uno.name }}">
+		{{form.telefono_uno.label}}
+	</label>
+		{{form.telefono_uno}}
+</div>
+
+<!-----------------   FIN DE CAMPOS ---------------------------------->
+
+
+<!-----------------   CAMPO DE TELEFONO DOS DEL CLIENTE ------------------>
+
+<div class="form-group">
+	<label for="{{ form.telefonos_dos.name }}">
+		{{form.telefonos_dos.label}}
+	</label>
+		{{form.telefonos_dos}}
+</div>
+
+<!-----------------   FIN DE CAMPOS ---------------------------------->
+
+
+<!-----------------   CAMPO DE MENSUALIDAD DEL CLIENTE ------------------>
+
+<div class="form-group">
+	<label for="{{ form.mensualidad.name }}">
+		{{form.mensualidad.label}}
+	</label>
+		{{form.mensualidad}}
+</div>
+
+<!-----------------   FIN DE CAMPOS ---------------------------------->
+
+
+<!-----------------   CAMPO DE FECHA DE INSTALACION DEL CLIENTE ------------------>
+
+			<div class="form-group">
+				<label for="{{ form.fecha_instalacion.name }}">
+					{{form.fecha_instalacion.label}}
+				</label>
+					{{form.fecha_instalacion}}
+			</div>
+
+<!-----------------   FIN DE CAMPOS ---------------------------------->
+
+
+
 <!-----------------   CAMPO DE LA DIRECCION DEL CLIENTE ------------------>
 
+<div class="form-group">
+	<label for="{{ form.direccion.name }}">
+		{{form.direccion.label}}
+	</label>
+		{{form.direccion}}
+</div>
+
+<!-----------------   FIN DE CAMPOS ---------------------------------->
+
+
+<!-----------------   CAMPO DE VEREDA ------------------>
+
 			<div class="form-group">
-				<label for="{{ form.direccion.name }}">
-					{{form.direccion.label}}
+				<label for="{{ form.vereda.name }}">
+					{{form.vereda.label}}
 				</label>
-					{{form.direccion}}
+					{{form.vereda}}
 			</div>
 
 <!-----------------   FIN DE CAMPOS ---------------------------------->
 
 
-<!-----------------   CAMPO DEL NACIMIENTO DEL CLIENTE ------------------>
+<!-----------------   CAMPO TIPO DE INSTALACION DEL CLIENTE ------------------>
 
 			<div class="form-group">
-				<label for="{{ form.nacimiento.name }}">
-					{{form.nacimiento.label}}
+				<label for="{{ form.tipo_instalacion.name }}">
+					{{form.tipo_instalacion.label}}
 				</label>
-					{{form.nacimiento}}
+					{{form.tipo_instalacion}}
 			</div>
 
 <!-----------------   FIN DE CAMPOS ---------------------------------->
 
 
-<!-----------------   CAMPO DEL TELEFONO DEL CLIENTE ------------------>
-
-			<div class="form-group">
-				<label for="{{ form.telefono.name }}">
-					{{form.telefono.label}}
-				</label>
-					{{form.telefono}}
-			</div>
-
-<!-----------------   FIN DE CAMPOS ---------------------------------->
-
-
-<!-----------------   CAMPO DEL CORREO DEL CLIENTE ------------------>
-
-			<div class="form-group">
-				<label for="{{ form.correo.name }}">
-					{{form.correo.label}}
-				</label>
-					{{form.correo}}
-			</div>
-
-<!-----------------   FIN DE CAMPOS ---------------------------------->
-
-
-<!-----------------   CAMPO DEL CORREO ALTERNATIVO DEL CLIENTE ------------------>
+<!-----------------   CAMPO DE STATUS ------------------>
 
 			<div class="form-group" id="div_correo2">
-				<label for="{{ form.correo2.name }}">
-					{{form.correo2.label}}
+				<label for="{{ form.status.name }}">
+					{{form.status.label}}
 				</label>
-					{{form.correo2}}
+					{{form.status}}
 			</div>
 
 <!-----------------   FIN DE CAMPOS ---------------------------------->
 
 
-<!-----------------   CAMPO DEL TELEFONO ALTERNATIVO DEL CLIENTE ------------------>
+<!-----------------   CAMPO DE DESCRIPCION ------------------>
 
 			<div class="form-group" id="div_telefono2">
-				<label for="{{ form.telefono2.name }}">
-					{{form.telefono2.label}}
+				<label for="{{ form.descripcion.name }}">
+					{{form.descripcion.label}}
 				</label>
-					{{form.telefono2}}
+					{{form.descripcion}}
 			</div>
 
 <!-----------------   FIN DE CAMPOS ---------------------------------->
 
 
-<!------------    MUESTRA LOS CAMPOS DE CORREO Y TELEFONO ALTERNATIVOS -------------->
-				<div class="form-group">
-					<label>
-						<input class="checkbox rounded" type="checkbox"
-						onchange="clienteCamposOcultos(this)">
-						<span>
-						Mostrar campos opcionales
-						</span>
-					</label>
-				</div>
-<!------------------------------- FIN DE CAMPOS OPCIONALES -------------------------->	
+<!-----------------   CAMPO DE DESCRIPCION ------------------>
 
+<div class="form-group" id="div_telefono2">
+	<label for="{{ form.id_Pueblo.name }}">
+		{{form.id_Pueblo.label}}
+	</label>
+		{{form.id_Pueblo}}
+</div>
+
+<!-----------------   FIN DE CAMPOS ---------------------------------->
+
+
+<!-----------------   CAMPO DE DESCRIPCION ------------------>
+
+<div class="form-group" id="div_telefono2">
+	<label for="{{ form.id_Pueblo.name }}">
+		{{form.id_Estado.label}}
+	</label>
+		{{form.id_Estado}}
+</div>
+
+<!-----------------   FIN DE CAMPOS ---------------------------------->
 
 
 <!------------------------------- BOTON DE INGRESO ------------------------------------>
@@ -240,22 +300,3 @@ function clienteCamposOcultos(esto)
 </section>
 </article>
 {% endblock %}
-
-<script>
-	
-document.onload
-{
-	let tipoCedula = document.getElementById('tipoCedula')
-	console.log(tipoCedula)	
-
-	let segTelefono = document.getElementById('div_telefono2')
-	let segCorreo = document.getElementById('div_correo2')
-
-	segTelefono.style = 'display: none;';
-	segCorreo.style = 'display: none;';
-
-	let opcionales = document.getElementById('mostrar_opcionales')
-	opcionales.checked = false;
-}
-	
-</script>
