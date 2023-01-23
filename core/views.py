@@ -268,3 +268,100 @@ class Perfil(LoginRequiredMixin, View):
                 else:
                     return HttpResponseRedirect("/perfil/clave/%s" % p)
 # ----------------------------------------------------------------------------------#
+
+
+
+#Crea un nuevo usuario--------------------------------------------------------------#
+class CrearUsuario(LoginRequiredMixin, View):
+    login_url = '/login'
+    redirect_field_name = None    
+
+    def get(self, request):
+        if request.user.is_superuser:
+            form = NuevoUsuarioFormulario()
+            #Envia al usuario el formulario para que lo llene
+            contexto = {'form':form , 'modo':request.session.get('usuarioCreado')}   
+            contexto = complementarContexto(contexto,request.user)  
+            return render(request, 'usuario/crearUsuario.html', contexto)
+        else:
+            messages.error(request, 'No tiene los permisos para crear un usuario nuevo')
+            return HttpResponseRedirect('/panel')
+
+    def post(self, request):
+        form = NuevoUsuarioFormulario(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            rep_password = form.cleaned_data['rep_password']
+            level = form.cleaned_data['level']
+
+            error = 0
+
+            if password == rep_password:
+                pass
+
+            else:
+                error = 1
+                messages.error(request, 'La clave y su repeticion tienen que coincidir')
+
+            if usuarioExiste(Usuario,'username',username) is False:
+                pass
+
+            else:
+                error = 1
+                messages.error(request, "El nombre de usuario '%s' ya existe. eliga otro!" % username)
+
+
+            if usuarioExiste(Usuario,'email',email) is False:
+                pass
+
+            else:
+                error = 1
+                messages.error(request, "El correo '%s' ya existe. eliga otro!" % email)                    
+
+            if(error == 0):
+                if level == '0':
+                    nuevoUsuario = Usuario.objects.create_user(username=username,password=password,email=email)
+                    nivel = 0
+                elif level == '1':
+                    nuevoUsuario = Usuario.objects.create_superuser(username=username,password=password,email=email)
+                    nivel = 1
+
+                nuevoUsuario.first_name = first_name
+                nuevoUsuario.last_name = last_name
+                nuevoUsuario.nivel = nivel
+                nuevoUsuario.save()
+
+                messages.success(request, 'Usuario creado exitosamente')
+                return HttpResponseRedirect('/crearUsuario')
+
+            else:
+                return HttpResponseRedirect('/crearUsuario')
+                        
+                   
+
+
+
+#Fin de vista----------------------------------------------------------------------
+
+
+#Lista todos los usuarios actuales--------------------------------------------------------------#
+class ListarUsuarios(LoginRequiredMixin, View):
+    login_url = '/login'
+    redirect_field_name = None    
+
+    def get(self, request):
+        usuarios = Usuario.objects.all()
+        #Envia al usuario el formulario para que lo llene
+        contexto = {'tabla':usuarios}   
+        contexto = complementarContexto(contexto,request.user)  
+        return render(request, 'usuario/listarUsuarios.html', contexto)
+
+    def post(self, request):
+        pass   
+
+#Fin de vista----------------------------------------------------------------------
+
