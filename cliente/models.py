@@ -75,20 +75,5 @@ class Cliente(models.Model):
     @classmethod
     def numeroRegistrados(self):
         return int(self.objects.all().count() )
-
-    @classmethod
-    def cedulasRegistradas(self):
-        objetos = self.objects.all().order_by('nombre')
-        arreglo = []
-        for indice,objeto in enumerate(objetos):
-            arreglo.append([])
-            arreglo[indice].append(objeto.cedula)
-            nombre_cliente = objeto.nombre + " " + objeto.apellido
-            arreglo[indice].append("%s. C.I: %s" % (nombre_cliente,self.formatearCedula(objeto.cedula)) )
- 
-        return arreglo   
-
-    @staticmethod
-    def formatearCedula(cedula):
-        return format(int(cedula), ',d')        
+      
 #-----------------------------------------------------------------------------------------        

@@ -4,7 +4,14 @@ from .models import Cliente
 
 class ClienteFormulario(forms.ModelForm):
     tipoInsta =  [ ('Fibra Optica','Fibra'),('Radio Enlace','Radio')]
-    tipo_instalacion = forms.ChoiceField(choices=tipoInsta)
+
+    tipo_instalacion = forms.CharField(
+        label="Tipo de Instalacion",
+        max_length=20,
+        widget=forms.Select(choices=tipoInsta,attrs={'placeholder': 'Tipo de Instalacion',
+        'id':'tipo_instalacion','class':'form-control'}
+        )
+        )
 
     class Meta:
         model = Cliente

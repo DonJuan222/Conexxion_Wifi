@@ -72,6 +72,7 @@ class AgregarCliente(LoginRequiredMixin, View):
             return render(request, 'cliente/agregarCliente.html', {'form': form})        
 
     def get(self,request):
+      
         form = ClienteFormulario()
         #Envia al usuario el formulario para que lo llene
         contexto = {'form':form , 'modo':request.session.get('clienteProcesado')} 
