@@ -9,6 +9,14 @@ urlpatterns = [
     # path('exportarClientes', views.ExportarClientes.as_view(), name='exportarClientes'),
     path('editarCliente/<int:p>', views.EditarCliente.as_view(), name='editarCliente'),
     path('eliminar/<str:modo>/<int:p>', views.Eliminar.as_view(), name='eliminar'),
+        
+    path('emitirFactura', views.EmitirFactura.as_view(), name='emitirFactura'),
+    path('listarFacturas',views.ListarFacturas.as_view(), name='listarFacturas'),
+    # path('verFactura/<int:p>',views.VerFactura.as_view(), name='verFactura'),
+    # path('generarFactura/<int:p>',views.GenerarFactura.as_view(), name='generarFactura'),
+    # path('generarFacturaPDF/<int:p>',views.GenerarFacturaPDF.as_view(), name='generarFacturaPDF'),
+
+
 
 ]
 

@@ -341,10 +341,6 @@ class CrearUsuario(LoginRequiredMixin, View):
             else:
                 return HttpResponseRedirect('/crearUsuario')
                         
-                   
-
-
-
 #Fin de vista----------------------------------------------------------------------
 
 

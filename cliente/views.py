@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 # para redirigir a otras paginas
 from django.http import HttpResponseRedirect, HttpResponse
@@ -14,6 +14,9 @@ from core.funciones import *
 from django.views import View
 from cliente.forms import *
 # Create your views here.
+
+#formularios dinamicos
+from django.forms import formset_factory
 
 
 #Crea una lista de los clientes, 10 por pagina----------------------------------------#
@@ -186,3 +189,43 @@ class Eliminar(LoginRequiredMixin, View):
 
 
 #Fin de vista-------------------------------------------------------------------   
+
+
+#Emite la primera parte de la factura------------------------------#
+class EmitirFactura(LoginRequiredMixin, View):
+    login_url = '/login'
+    redirect_field_name = None
+
+    def post(request):
+        if request.method == 'GET':
+            return render(request, 'factura/emitirFactura.html',{
+            'form': GenerarFactura
+        })
+        else:
+            try:
+                form=GenerarFactura(request.POST)
+                factura=form.save(commit=False)
+                factura.save()
+                return redirect('listarFacturas')
+
+            except ValueError:
+                return render (request, 'factura/emitirFactura.html',{
+                    'form': GenerarFactura,
+                    'error': 'Por favor proporciona los datos'
+                })
+    
+#Fin de vista---------------------------------------------------------------------------------#
+
+
+#Crea una lista de los clientes, 10 por pagina----------------------------------------#
+class ListarFacturas(LoginRequiredMixin, View):
+    login_url = '/login'
+    redirect_field_name = None
+
+    def get(self, request):
+        from django.db import models
+        #Saca una lista de todas las facturas de la BDD
+        facturas = Factura.objects.all()                
+        contexto = {'tabla': facturas}
+        return render(request, 'factura/listarFacturas.html',contexto) 
+#Fin de vista--------------------------------------------------------------------------#

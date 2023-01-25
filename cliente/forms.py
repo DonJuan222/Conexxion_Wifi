@@ -1,5 +1,5 @@
 from django import forms
-from .models import Cliente
+from .models import Cliente,Factura
 
 
 class ClienteFormulario(forms.ModelForm):
@@ -53,3 +53,37 @@ class ClienteFormulario(forms.ModelForm):
         'id_Estado': forms.TextInput(attrs={'class':'form-control','id':'id_Estado','placeholder':'Estado'}),                                                                                                                    
 
         }
+
+        
+class GenerarFactura(forms.ModelForm):
+    
+    class Meta:
+        model = Factura
+        fields = ['descripcion','valor_pago','fecha_pago','fecha_vencimiento']
+        labels = {
+
+        'descripcion': 'Detalle del pago',
+        'valor_pago': 'Valor del Pago',
+        'fecha_pago': 'Fecha del pago',
+        'fecha_vencimiento': 'Pago valido hasta',
+        
+        }
+        widgets = {
+    
+        'descripcion': forms.TextInput(attrs={'placeholder': 'Detalles del pago','id':'descripcion','class':'form-control'} ),
+        'valor_pago': forms.TextInput(attrs={'placeholder': 'Valor de pago','id':'valor_pago','class':'form-control'}),
+        'fecha_pago': forms.DateInput(format=('%d-%m-%Y'),attrs={'id':'fecha_pago','class':'form-control','type':'date'}),
+        'fecha_vencimiento':forms.DateInput(format=('%d-%m-%Y'),attrs={'id':'fecha_instalacion','class':'form-control','type':'date'} ),
+       
+        }
+
+# class GenerarFactura(forms.Form):
+#     def __init__(self, *args, **kwargs):
+#        elecciones = kwargs.pop('ip')
+#        super(GenerarFactura, self).__init__(*args, **kwargs)
+
+#        if(elecciones):
+#             self.fields["cliente"] = forms.CharField(label="Cliente a facturar",max_length=50,
+#             widget=forms.Select(choices=elecciones,
+#             attrs={'placeholder': 'La cedula del cliente a facturar',
+#             'id':'cliente','class':'form-control'}))
