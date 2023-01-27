@@ -3,7 +3,7 @@ from .models import Cliente,Factura
 
 
 class ClienteFormulario(forms.ModelForm):
-    tipoInsta =  [ ('Fibra Optica','Fibra'),('Radio Enlace','Radio')]
+    tipoInsta =  [ ('------','------'),('Fibra Optica','Fibra'),('Radio Enlace','Radio')]
 
     tipo_instalacion = forms.CharField(
         label="Tipo de Instalacion",
@@ -56,12 +56,20 @@ class ClienteFormulario(forms.ModelForm):
 
         
 class GenerarFactura(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+       elecciones = kwargs.pop('ip')
+       super(GenerarFactura, self).__init__(*args, **kwargs)
+
+       if(elecciones):
+            self.fields["ip"] = forms.CharField(label="Cliente a facturar",max_length=50,
+            widget=forms.Select(choices=elecciones,attrs={'placeholder': 'Ip del cliente a facturar','id':'ip','class':'form-control'}))
     
     class Meta:
         model = Factura
-        fields = ['descripcion','valor_pago','fecha_pago','fecha_vencimiento']
+        fields = ['cliente','descripcion','valor_pago','fecha_pago','fecha_vencimiento']
         labels = {
 
+        'cliente': 'Cliente',
         'descripcion': 'Detalle del pago',
         'valor_pago': 'Valor del Pago',
         'fecha_pago': 'Fecha del pago',
@@ -70,6 +78,7 @@ class GenerarFactura(forms.ModelForm):
         }
         widgets = {
     
+        'cliente': forms.TextInput(attrs={'placeholder': 'Cliente','id':'cliente','class':'form-control'} ),
         'descripcion': forms.TextInput(attrs={'placeholder': 'Detalles del pago','id':'descripcion','class':'form-control'} ),
         'valor_pago': forms.TextInput(attrs={'placeholder': 'Valor de pago','id':'valor_pago','class':'form-control'}),
         'fecha_pago': forms.DateInput(format=('%d-%m-%Y'),attrs={'id':'fecha_pago','class':'form-control','type':'date'}),

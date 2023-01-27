@@ -142,7 +142,8 @@ class EditarCliente(LoginRequiredMixin, View):
             return HttpResponseRedirect("/editarCliente/%s" % cliente.id)
         else:
             #De lo contrario lanzara el mismo formulario
-            return render(request, 'cliente/agregarCliente.html', {'form': form})
+            messages.success(request, 'La Ip o la Cedula ya estan registradas')
+            return HttpResponseRedirect("/editarCliente/%s" % cliente.id)
 
     def get(self, request,p): 
         cliente = Cliente.objects.get(id=p)
@@ -152,7 +153,6 @@ class EditarCliente(LoginRequiredMixin, View):
         contexto = complementarContexto(contexto,request.user)     
         return render(request, 'cliente/agregarCliente.html', contexto)  
 #Fin de vista--------------------------------------------------------------------------------# 
-
 
 
 #Elimina usuarios,clientes ----------------------------------------------------------------
@@ -196,23 +196,45 @@ class EmitirFactura(LoginRequiredMixin, View):
     login_url = '/login'
     redirect_field_name = None
 
-    def post(request):
-        if request.method == 'GET':
-            return render(request, 'factura/emitirFactura.html',{
-            'form': GenerarFactura
-        })
-        else:
-            try:
-                form=GenerarFactura(request.POST)
-                factura=form.save(commit=False)
-                factura.save()
-                return redirect('listarFacturas')
+    def post(self, request,id):
+        # Crea una instancia del formulario y la llena con los datos:
+        factura=Cliente.objects.get(id=id)
+        ip = Cliente.ipRegistradas()
+        form = GenerarFactura(request.POST,ip=ip,instance=factura)
+        
+        # Revisa si es valido:
+        if form.is_valid():
+            # Procesa y asigna los datos con form.cleaned_data como se requiere
+        
+            ip = form.cleaned_data['ip']
+            descripcion = form.cleaned_data['descripcion']
+            valor_pago = form.cleaned_data['valor_pago']
+            fecha_pago = form.cleaned_data['fecha_pago']
+            fecha_vencimiento= form.cleaned_data['fecha_vencimiento']
 
-            except ValueError:
-                return render (request, 'factura/emitirFactura.html',{
-                    'form': GenerarFactura,
-                    'error': 'Por favor proporciona los datos'
-                })
+            factura=Factura(
+            ip=ip,
+            descripcion=descripcion,
+            valor_pago=valor_pago,
+            fecha_pago=fecha_pago,
+            fecha_vencimiento=fecha_vencimiento
+            )
+            factura.save()
+            form=GenerarFactura()
+            
+            messages.success(request, 'Ingresado exitosamente bajo la ID %s.' % factura.id)
+            return HttpResponseRedirect("/listarFacturas/%s" % factura.id)
+        else:
+            #De lo contrario lanzara el mismo formulario
+            return render(request, 'factura/emitirFactura.html', {'form': form})
+
+    def get(self,request,id):
+        factura=Cliente.objects.get(id=id)
+        ip = Cliente.ipRegistradas()   
+        form = GenerarFactura(ip=ip,instance=factura)
+        contexto = {'form':form}
+        contexto = complementarContexto(contexto,request.user) 
+        return render(request, 'factura/emitirFactura.html', contexto)
     
 #Fin de vista---------------------------------------------------------------------------------#
 

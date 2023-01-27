@@ -56,6 +56,7 @@ class Cliente(models.Model):
         ('abajo', 'Sin servicio'),
     )
     TIPOS_CHOICES = (
+        ('------','------'),
         ('Fibra Optica','Fibra'),
         ('Radio Enlace','Radio'),
     )
@@ -101,7 +102,6 @@ class Cliente(models.Model):
             nombre_cliente = objeto.nombre + " " + objeto.apellido
             arreglo[indice].append("%s. I.P: %s" % (nombre_cliente,self.formatearIp(objeto.ip)) )
         return arreglo   
-
 
     @staticmethod
     def formatearIp(ip):
