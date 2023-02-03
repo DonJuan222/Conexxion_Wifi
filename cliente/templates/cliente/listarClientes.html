@@ -54,13 +54,14 @@
                                                 <td><strong>Direccion</strong></td>
                                                 <td><strong>Vereda</strong></td>
                                                 <td><strong>Descripcion</strong></td>
+                                                <td><strong>Status</strong></td>
                                                 <td><strong>Opciones</strong></td>
                                              
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for fila in tabla %}
-                                            <tr>
+                
                                                 <td>{{fila.id}}</td>
                                                 <td>{{fila.ip}}</td>
                                                 <td>{{fila.cedula}}</td>
@@ -76,8 +77,14 @@
                                                 <td>{{fila.direccion}}</td>
                                                 <td>{{fila.vereda}}</td>
                                                 <td>{{fila.descripcion}}</td>
-                                                                        
+                                                {% if fila.status == 'arriba' %}
+                                                <td align="center" style="color: green;"> <em class="fa fa-check"></em></td>
+                                                {% elif fila.status == 'abajo' %}
+                                                <td align="center" style="color: red;"><em class="fa fa-ban"></em></td>
+                                                {% endif %}
+
                                                 <td>
+                                        
 
                                                     <div class="btn-group">
 
@@ -87,8 +94,10 @@
 
                                                         <div class="dropdown-menu">
                                                             <a class="dropdown-item"
-                                                                href="/crear_factura/{{ fila.id}}">Crear Factura
-                                                                cliente</a>
+                                                                href="/editarCliente/{{ fila.id}}">Editar Cliente</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item"
+                                                                href="/crear_factura/{{ fila.id}}">Crear Factura</a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item"
                                                                 href="/listarFactura/{{ fila.id}}">Listar Facturas</a>

@@ -18,6 +18,9 @@ from cliente.forms import *
 # formularios dinamicos
 from django.forms import formset_factory
 
+#Decoradores permisos y Login
+from django.contrib.auth.decorators import login_required
+
 #Importar registros
 import pandas as pd
 import io
@@ -61,17 +64,15 @@ class AgregarCliente(LoginRequiredMixin, View):
             mensualidad = form.cleaned_data['mensualidad']
             fecha_instalacion = form.cleaned_data['fecha_instalacion']
             direccion = form.cleaned_data['direccion']
-            vereda = form.cleaned_data['vereda']
             tipo_instalacion = form.cleaned_data['tipo_instalacion']
             status = form.cleaned_data['status']
             descripcion = form.cleaned_data['descripcion']
-            id_Pueblo = form.cleaned_data['id_Pueblo']
             id_Estado = form.cleaned_data['id_Estado']
 
             cliente = Cliente(ip=ip, cedula=cedula, nombre=nombre, apellido=apellido, telefono_uno=telefono_uno,
                               telefonos_dos=telefonos_dos, mensualidad=mensualidad, fecha_instalacion=fecha_instalacion,
-                              direccion=direccion, vereda=vereda, tipo_instalacion=tipo_instalacion,
-                              status=status, descripcion=descripcion, id_Pueblo=id_Pueblo, id_Estado=id_Estado)
+                              direccion=direccion, tipo_instalacion=tipo_instalacion,
+                              status=status, descripcion=descripcion,id_Estado=id_Estado)
             cliente.save()
             form = ClienteFormulario()
 
@@ -117,11 +118,11 @@ class EditarCliente(LoginRequiredMixin, View):
             mensualidad = form.cleaned_data['mensualidad']
             fecha_instalacion = form.cleaned_data['fecha_instalacion']
             direccion = form.cleaned_data['direccion']
-            vereda = form.cleaned_data['vereda']
+       
             tipo_instalacion = form.cleaned_data['tipo_instalacion']
             status = form.cleaned_data['status']
             descripcion = form.cleaned_data['descripcion']
-            id_Pueblo = form.cleaned_data['id_Pueblo']
+           
             id_Estado = form.cleaned_data['id_Estado']
 
             cliente.ip = ip
@@ -133,11 +134,11 @@ class EditarCliente(LoginRequiredMixin, View):
             cliente.mensualidad = mensualidad
             cliente.fecha_instalacion = fecha_instalacion
             cliente.direccion = direccion
-            cliente.vereda = vereda
+     
             cliente.tipo_instalacion = tipo_instalacion
             cliente.status = status
             cliente.descripcion = descripcion
-            cliente.id_Pueblo = id_Pueblo
+          
             cliente.id_Estado = id_Estado
             cliente.save()
             form = ClienteFormulario(instance=cliente)
@@ -241,7 +242,7 @@ class Eliminar(LoginRequiredMixin, View):
 
 
 # Crea una lista de la factura, 10 por pagina----------------------------------------#
-class ListarFactura(View):
+class ListarFactura(LoginRequiredMixin,View):
 
     def get(self, request, factura_id):
         cliente = Cliente.objects.get(id=factura_id)
@@ -253,6 +254,7 @@ class ListarFactura(View):
 
 
 # Funcion que permite crear la factura de un cliente por su ID------------------------------------------------#
+
 def crear_factura(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
     if request.method == 'POST':
@@ -270,7 +272,7 @@ def crear_factura(request, cliente_id):
 
 
 #Muestra los detalles individuales de una factura------------------------------------------------#
-class VerFactura(View):
+class VerFactura(LoginRequiredMixin,View):
     def get(self, request, p):
         try:
             factura = Factura.objects.get(id=p)
@@ -283,7 +285,7 @@ class VerFactura(View):
 
 
 #Genera la factura en PDF--------------------------------------------------------------------------#
-class GenerarFacturaPDF(View):
+class GenerarFacturaPDF(LoginRequiredMixin,View):
     redirect_field_name = None
 
     def get(self, request, p):

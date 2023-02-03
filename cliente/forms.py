@@ -15,8 +15,8 @@ class ClienteFormulario(forms.ModelForm):
 
     class Meta:
         model = Cliente
-        fields = ['ip','cedula','nombre','apellido','telefono_uno','telefonos_dos','mensualidad','fecha_instalacion','direccion','vereda',
-                  'tipo_instalacion','status','descripcion','id_Pueblo','id_Estado']
+        fields = ['ip','cedula','nombre','apellido','telefono_uno','telefonos_dos','mensualidad','fecha_instalacion','direccion',
+                  'tipo_instalacion','status','descripcion','id_Estado']
         labels = {
         'ip': 'Ip del cliente',
         'cedula': 'Cedula del cliente',
@@ -27,11 +27,9 @@ class ClienteFormulario(forms.ModelForm):
         'mensualidad': 'Mensualidad cliente',
         'fecha_instalacion': 'Fecha de instalacion del cliente',
         'direccion': 'Dirección',
-        'vereda': 'Vereda',
         'tipo_instalacion': 'Tipo de Instalacion',
         'status': 'Estado del Cliente',
         'descripcion': 'Detalles',
-        'id_Pueblo': 'Pueblo',
         'id_Estado': 'Estado',
         }
         widgets = {
@@ -45,13 +43,9 @@ class ClienteFormulario(forms.ModelForm):
         'mensualidad': forms.TextInput(attrs={'class':'form-control','id':'mensualidad','placeholder':'Mensualidad del cliente'}),                                                                                                     
         'fecha_instalacion':forms.DateInput(format=('%d-%m-%Y'),attrs={'id':'fecha_instalacion','class':'form-control','type':'date'} ),
         'direccion': forms.TextInput(attrs={'class':'form-control','id':'direccion','placeholder':'Direccion del cliente'}),                                                                       
-        'vereda': forms.TextInput(attrs={'class':'form-control','id':'vereda','placeholder':'Vereda'}),                                                                       
         'tipo_instalacion': forms.TextInput(attrs={'class':'form-control','id':'tipo_instalacion','placeholder':'Tipo de instalacion'}),                                                                       
-        'status': forms.TextInput(attrs={'class':'form-control','id':'status','placeholder':'Status'}),                                                                           
         'descripcion': forms.TextInput(attrs={'class':'form-control','id':'descripcion','placeholder':'Descripcion'}), 
-        'id_Pueblo': forms.TextInput(attrs={'class':'form-control','id':'id_Pueblo','placeholder':'Pueblo'}),                                                                           
-        'id_Estado': forms.TextInput(attrs={'class':'form-control','id':'id_Estado','placeholder':'Estado'}),                                                                                                                    
-
+           
         }
 
 class FacturaForm(forms.ModelForm):
