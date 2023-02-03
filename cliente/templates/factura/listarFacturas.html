@@ -5,7 +5,7 @@
 <article class="content responsive-tables-page">
     <div class="title-block">
         <h1 class="title"> Listar facturas </h1>
-        <p class="title-description"> Verifique las facturas agregados </p>
+        <p class="title-description"> Verifique las facturas agregadas</p>
     </div>
     <section class="section">
         <div class="row">
@@ -25,33 +25,35 @@
                 <div class="card">
                     <div class="card-block">
                         <div class="card-title-block">
-                            <h3 class="title">Facturas</h3>
+                            <h3 class="title">Factura</h3>
+                            <h1>{{ factura.cliente.nombre }} {{ cliente.apellido }}</h1>
                         </div>
                         <section class="example">
                             <div class="table-responsive">
                                 <table id="example2" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Detalles</th>
-                                            <th>Nombre</th>
-                                            <th>Ip del Cliente</th>
-                                            <th>Valor de Pago</th>
-                                            <th>Fecha de Pago</th>
-                                            <th>Pago valido hasta</th>
+                                            <td><strong>Detalles</strong></td>
+                                            <td><strong>Nombre</strong></td>
+                                            <td><strong>Apellido</strong></td>
+                                            <td><strong>Valor de Pago</strong></td>
+                                            <td><strong>Fecha de Pago</strong></td>
+                                            <td><strong>Pago valido hasta</strong></td>
+                                            <td><strong>Opciones</strong></td>
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for fila in tabla %}
+                                        {% for factura in facturas %}
                                         <tr>
-                                            <td>{{ fila.descripcion}}</td>
-                                            <td>{{ fila.cliente.nombre }}</td>
-                                            <td>{{ fila.cliente.ip }}</td>
-                                            <td>{{ fila.valor_pago }}</td>
-                                            <td>{{ fila.fecha_pago }}</td>
-                                            <td>{{ fila.fecha_vencimiento }}</td>
-                                            <td>
+                                            <td>{{ factura.descripcion }}</td>
+                                            <td>{{ factura.cliente.nombre }}</td>
+                                            <td>{{ factura.cliente.apellido }}</td>
+                                            <td>{{ factura.valor_pago }}</td>
+                                            <td>{{ factura.fecha_pago }}</td>
+                                            <td>{{ factura.fecha_vencimiento }}</td>
 
+                                            <td>
                                                 <div class="btn-group">
 
                                                     <button type="button" class="btn btn-info dropdown-toggle"
@@ -60,15 +62,16 @@
 
                                                     <div class="dropdown-menu">
                                                         <a class="dropdown-item"
-                                                            href="/verFactura/{{ fila.id}}">Editar/Ver Factura</a>
+                                                            href="/verFactura/{{ factura.id }}">Editar/Ver Factura</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item"
-                                                            href="/generarFactura/{{ fila.id}}">Generar reporte
+                                                            href="/generarFactura/{{ fila.id }}">Generar reporte
                                                             (CSV)</a>
-                                                        <!-- <div class="dropdown-divider"></div>
+                                                    </div>
+                                                    <!-- <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item" href="/generarFacturaPDF/{{ fila.id}}">Generar reporte (PDF)</a>
                                                     </div> -->
-                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         {% endfor %}

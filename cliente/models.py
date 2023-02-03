@@ -112,8 +112,8 @@ class Cliente(models.Model):
 
 #-------------------------------------FACTURA---------------------------------------------
 class Factura(models.Model):
-    cliente = models.ForeignKey(Cliente,to_field='cedula', on_delete=models.CASCADE)
-    descripcion = models.TextField( null=True,blank=True, verbose_name='Descripcion')
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    descripcion = models.CharField(max_length=100, null=True,blank=True, verbose_name='Descripcion')
     valor_pago =  models.PositiveIntegerField( null=True,blank=True, verbose_name='Valor del Pago')
     fecha_pago = models.DateField(null=True,verbose_name='Fecha de pago')
     fecha_vencimiento = models.DateField(null=True,blank=True,verbose_name='Valido Hasta')

@@ -54,45 +54,25 @@ class ClienteFormulario(forms.ModelForm):
 
         }
 
-        
-class GenerarFactura(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-       elecciones = kwargs.pop('ip')
-       super(GenerarFactura, self).__init__(*args, **kwargs)
-
-       if(elecciones):
-            self.fields["ip"] = forms.CharField(label="Cliente a facturar",max_length=50,
-            widget=forms.Select(choices=elecciones,attrs={'placeholder': 'Ip del cliente a facturar','id':'ip','class':'form-control'}))
-    
+class FacturaForm(forms.ModelForm):
     class Meta:
         model = Factura
-        fields = ['cliente','descripcion','valor_pago','fecha_pago','fecha_vencimiento']
-        labels = {
-
-        'cliente': 'Cliente',
-        'descripcion': 'Detalle del pago',
-        'valor_pago': 'Valor del Pago',
-        'fecha_pago': 'Fecha del pago',
-        'fecha_vencimiento': 'Pago valido hasta',
+        fields = ['descripcion', 'valor_pago', 'fecha_pago', 'fecha_vencimiento']
         
+        labels = {
+        'descripcion': 'Detalle',
+        'valor_pago': 'Valor del Pago',
+        'fecha_pago': 'Fecha de Pago',
+        'fecha_vencimiento': 'Pago Valido Hasta',
+
         }
         widgets = {
     
-        'cliente': forms.TextInput(attrs={'placeholder': 'Cliente','id':'cliente','class':'form-control'} ),
-        'descripcion': forms.TextInput(attrs={'placeholder': 'Detalles del pago','id':'descripcion','class':'form-control'} ),
-        'valor_pago': forms.TextInput(attrs={'placeholder': 'Valor de pago','id':'valor_pago','class':'form-control'}),
-        'fecha_pago': forms.DateInput(format=('%d-%m-%Y'),attrs={'id':'fecha_pago','class':'form-control','type':'date'}),
-        'fecha_vencimiento':forms.DateInput(format=('%d-%m-%Y'),attrs={'id':'fecha_instalacion','class':'form-control','type':'date'} ),
-       
+        'descripcion': forms.TextInput(attrs={'placeholder': 'Inserte el detalle de la factura','id':'ip','class':'form-control'} ),
+        'valor_pago': forms.TextInput(attrs={'placeholder': 'Inserte el valor de pago','id':'cedula','class':'form-control'} ),
+        'fecha_pago': forms.DateInput(format=('%d-%m-%Y'),attrs={'id':'fecha_pago','class':'form-control','type':'date'} ),
+        'fecha_vencimiento': forms.DateInput(format=('%d-%m-%Y'),attrs={'id':'fecha_vencimiento','class':'form-control','type':'date'} ),
+
         }
 
-# class GenerarFactura(forms.Form):
-#     def __init__(self, *args, **kwargs):
-#        elecciones = kwargs.pop('ip')
-#        super(GenerarFactura, self).__init__(*args, **kwargs)
-
-#        if(elecciones):
-#             self.fields["cliente"] = forms.CharField(label="Cliente a facturar",max_length=50,
-#             widget=forms.Select(choices=elecciones,
-#             attrs={'placeholder': 'La cedula del cliente a facturar',
-#             'id':'cliente','class':'form-control'}))
+        
