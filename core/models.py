@@ -6,11 +6,11 @@ from django.contrib.auth.models import AbstractUser
 #--------------------------------USUARIO------------------------------------------------
 class Usuario(AbstractUser):
 
-    username = models.CharField(max_length=80, unique=True)
-    password = models.CharField(max_length=50)
+    username = models.CharField(max_length=100, unique=True)
+    password = models.CharField(max_length=100)
     email = models.EmailField(max_length=100, unique=True)
-    first_name = models.CharField(max_length=40)
-    last_name = models.CharField(max_length=60)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     nivel = models.IntegerField(null=True) 
 
     @classmethod

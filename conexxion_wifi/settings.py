@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core',
     'cliente',
     'torre',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -80,10 +81,22 @@ WSGI_APPLICATION = 'conexxion_wifi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'bd.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'conexxion_wifi',
+        'USER': 'root',
+        'PASSWORD': 'SENAsamaria12',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'bd.sqlite3',
+#     }
+# }
 
 
 # Password validation
